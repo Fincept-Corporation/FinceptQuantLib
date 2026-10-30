@@ -1,8 +1,11 @@
 name: Release
 
+# Runs only when a GitHub release is published or when started manually.
+# Manual runs test and build without publishing.
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -16,10 +19,13 @@ jobs:
         with:
           python-version: "3.12"
       - name: Check tag matches package version
+        if: github.event_name == 'release'
         run: |
           version=$(python -c "import re; print(re.search(r'__version__ = \"(.+?)\"', open('src/finceptquantlib/__init__.py').read()).group(1))")
           test "${GITHUB_REF_NAME#v}" = "$version" || { echo "Tag $GITHUB_REF_NAME does not match version $version"; exit 1; }
-      - run: pip install build twine
+      - run: pip install -e ".[dev]"
+      - run: ruff check src tests
+      - run: pytest
       - run: python -m build
       - run: twine check --strict dist/*
       - uses: actions/upload-artifact@v4
@@ -29,6 +35,7 @@ jobs:
 
   publish:
     needs: build
+    if: github.event_name == 'release'
     runs-on: ubuntu-latest
     environment:
       name: pypi

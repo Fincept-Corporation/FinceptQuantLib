@@ -2,7 +2,6 @@
 
 [![PyPI](https://img.shields.io/pypi/v/finceptquantlib.svg)](https://pypi.org/project/finceptquantlib/)
 [![Python](https://img.shields.io/pypi/pyversions/finceptquantlib.svg)](https://pypi.org/project/finceptquantlib/)
-[![CI](https://github.com/Fincept-Corporation/FinceptQuantLib/actions/workflows/ci.yml/badge.svg)](https://github.com/Fincept-Corporation/FinceptQuantLib/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Fincept-Corporation/FinceptQuantLib/blob/main/LICENSE)
 
 Quantitative finance library from [Fincept Corporation](https://fincept.in): pricing, risk and
