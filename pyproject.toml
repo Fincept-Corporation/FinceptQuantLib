@@ -1,0 +1,113 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "finceptquantlib"
+dynamic = ["version"]
+description = "Quantitative finance library for pricing, risk and analytics across fixed income, derivatives and portfolios"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Fincept Corporation", email = "dev@fincept.in" }]
+maintainers = [{ name = "Fincept Corporation", email = "dev@fincept.in" }]
+requires-python = ">=3.11"
+dependencies = [
+    "scipy>=1.11",
+    "python-dateutil>=2.8",
+]
+keywords = [
+    "quantitative finance",
+    "derivatives pricing",
+    "fixed income",
+    "yield curves",
+    "interest rate swaps",
+    "options",
+    "volatility",
+    "heston",
+    "sabr",
+    "risk management",
+    "value at risk",
+    "xva",
+    "portfolio optimization",
+    "basel",
+    "frtb",
+    "ifrs 9",
+    "automatic differentiation",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Office/Business :: Financial",
+    "Topic :: Office/Business :: Financial :: Investment",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Typing :: Typed",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "ruff>=0.6",
+    "build>=1.2",
+    "twine>=5",
+]
+
+[project.urls]
+Homepage = "https://fincept.in"
+Repository = "https://github.com/Fincept-Corporation/FinceptQuantLib"
+Issues = "https://github.com/Fincept-Corporation/FinceptQuantLib/issues"
+Changelog = "https://github.com/Fincept-Corporation/FinceptQuantLib/blob/main/CHANGELOG.md"
+
+[tool.setuptools]
+zip-safe = false
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["finceptquantlib*"]
+
+[tool.setuptools.package-data]
+finceptquantlib = ["py.typed"]
+
+[tool.setuptools.dynamic]
+version = { attr = "finceptquantlib.__version__" }
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests", "src/finceptquantlib"]
+addopts = ["--strict-markers", "--doctest-modules", "--tb=short"]
+doctest_optionflags = ["NORMALIZE_WHITESPACE", "ELLIPSIS", "NUMBER"]
+markers = [
+    "slow: long-running tests (deselect with '-m \"not slow\"')",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E4",   # import errors
+    "E7",   # statement errors
+    "E9",   # syntax errors
+    "F",    # pyflakes
+    "B",    # flake8-bugbear
+    "C4",   # flake8-comprehensions
+    "W",    # pycodestyle warnings
+]
+ignore = [
+    "E741",  # single-letter names (K, T, S) are standard in quantitative code
+    "B007",  # unused loop variables in fixed-iteration solvers
+    "B008",  # function calls in argument defaults
+    "B905",  # zip() without strict=
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "F403", "F405"]
